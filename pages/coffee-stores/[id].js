@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 
-const coffee = () => {
+const coffee_store = () => {
     const router = useRouter()
     console.log(router);
   return (
@@ -16,4 +16,4 @@ const coffee = () => {
   )
 }
 
-export default coffee
+export default coffee_store

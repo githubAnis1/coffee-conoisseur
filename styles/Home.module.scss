@@ -58,3 +58,9 @@
       padding-right: 2rem /* 32px */;
     }
   }
+  .cardStoreItems {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+    gap: 30px ;
+  }
