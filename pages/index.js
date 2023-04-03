@@ -4,15 +4,21 @@ import styles from '@/styles/Home.module.scss'
 import Banner from '@/components/banner/banner'
 import CardStoreItem from '@/components/card-Store-Item/cardStoreItem'
 import cls from "classnames"
-import coffeStores from '/data/coffee-stores.json'
+import coffeStoresData from '/data/coffee-stores.json'
 
-const inter = Inter({ subsets: ['latin'] })
+export async function getStaticProps(context) {
+  /* const data = fetch(coffeStores)  if we have a server*/
+  return {
+    props: {
+      coffeStores:coffeStoresData,
+    }, // will be passed to the page component as props
+  }
+}
 
-export default function Home() {
+export default function Home(props) {
   const viewSotresNearBy = () => {
     console.log('banner clicked');
   }
-
   return (
     <div>
       <div className={cls("container")}>
@@ -23,18 +29,27 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className={styles.main}>
-        {/* Banner section */}
-          <Banner buttonText= 'View Stores nearby' handleOnClick= {viewSotresNearBy}/>
 
-        {/* Stores section */}
-        <div className={styles.cardStoreItems}>
-          {coffeStores.map((coffeStore) => { 
-            return <CardStoreItem
-              name = {coffeStore.name} 
-              imgUrl = {coffeStore.imgUrl} 
-              href = {`./coffee-stores/${coffeStore.name}`} 
-            />})}
-        </div>
+          {/* Banner section */}
+          <Banner buttonText= 'View Stores nearby' handleOnClick= {viewSotresNearBy}/>
+          {/* Stores section */}
+          {props.coffeStores.length > 0 && (
+            <div>
+              <h2 className={styles.town}>Algies stores</h2>
+              <div className={styles.cardStoreItems}>
+                {props.coffeStores.map((coffeStore) => { 
+                  return (
+                  <CardStoreItem
+                    key={coffeStore.id}
+                    name = {coffeStore.name} 
+                    imgUrl = {coffeStore.imgUrl} 
+                    href = {`./coffee-stores/${coffeStore.name}`} 
+                  />
+                  );
+                })}
+              </div>
+            </div>)}
+          
         </main>
       </div>
     </div>

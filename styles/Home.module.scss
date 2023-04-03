@@ -58,8 +58,15 @@
       padding-right: 2rem /* 32px */;
     }
   }
-  .cardStoreItems {
+  .town {
     margin-top: 4rem;
+    color: rebeccapurple;
+    font-size: 40px;
+    text-transform: uppercase;
+    text-shadow: 4px 3px 1px coral;
+  }
+  .cardStoreItems {
+    margin-top: 3rem;
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
     gap: 30px ;
