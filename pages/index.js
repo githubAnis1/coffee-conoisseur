@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.scss'
 import Banner from '@/components/banner/banner'
 import CardStoreItem from '@/components/card-Store-Item/cardStoreItem'
@@ -14,7 +13,6 @@ export async function getStaticProps(context) {
     }, // will be passed to the page component as props
   }
 }
-
 export default function Home(props) {
   const viewSotresNearBy = () => {
     console.log('banner clicked');
@@ -29,7 +27,6 @@ export default function Home(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className={styles.main}>
-
           {/* Banner section */}
           <Banner buttonText= 'View Stores nearby' handleOnClick= {viewSotresNearBy}/>
           {/* Stores section */}
@@ -43,13 +40,12 @@ export default function Home(props) {
                     key={coffeStore.id}
                     name = {coffeStore.name} 
                     imgUrl = {coffeStore.imgUrl} 
-                    href = {`./coffee-stores/${coffeStore.name}`} 
+                    href = {`./coffee-stores/${coffeStore.id}`} 
                   />
                   );
                 })}
               </div>
-            </div>)}
-          
+            </div>)} 
         </main>
       </div>
     </div>
