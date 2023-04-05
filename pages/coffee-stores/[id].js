@@ -8,8 +8,8 @@ import coffeeStoresData from '../../data/coffee-stores.json'
 // Generates `/coffee-stores/1` and `/coffee-stores/2`
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { id: '1' } }, { params: { id: '2' } }],
-    fallback: false, // can also be true or 'blocking'
+    paths:[] /* [{ params: { id: '1' } }, { params: { id: '2' } }] */,
+    fallback: true, // can also be true or 'blocking'
   }
 }
 
@@ -29,15 +29,21 @@ const coffee_store = ({coffeeStore}) => {
     const router = useRouter()
     console.log(router);/* shown in terminal */
     console.log(coffeeStore);/* shown in terminal */
+
+    if (router.isFallback) {
+      return <div>Loading...</div>
+    }
   return (
     <div>
       <Head>
           <title>{router.query.id}</title>
       </Head>
-      coffee with id of {router.query.id}
-      <br/>
       <Link href={'/'}> Back to home</Link>
       <br/>
+      coffee with id of {router.query.id}
+      <br/>
+      <div>{coffeeStore.name}</div>
+      
     </div>
   )
 }
@@ -48,4 +54,8 @@ export default coffee_store
 The idea here is to get the the prop depending on the path:
  return coffeeStore.id.toString() === params.id 
  then pass the prop to the component to render it 
- */
+
+Note:
+ make sure you get the dynamic route by 'id': 
+ href = {`./coffee-stores/${coffeStore.id}`} 
+*/
