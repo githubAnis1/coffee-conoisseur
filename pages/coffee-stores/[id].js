@@ -7,9 +7,16 @@ import coffeeStoresData from '../../data/coffee-stores.json'
 
 // Generates `/coffee-stores/1` and `/coffee-stores/2`
 export async function getStaticPaths() {
+  const paths = coffeeStoresData.map((coffeeStore)=>{
+      return {
+        params: {
+          id:coffeeStore.id.toString(),
+        }
+      }
+  });
   return {
-    paths:[] /* [{ params: { id: '1' } }, { params: { id: '2' } }] */,
-    fallback: true, // can also be true or 'blocking'
+    paths /* [{ params: { id: '1' } }, { params: { id: '2' } }] */,
+    fallback: false, // can also be true or 'blocking'
   }
 }
 
@@ -29,21 +36,22 @@ const coffee_store = ({coffeeStore}) => {
     const router = useRouter()
     console.log(router);/* shown in terminal */
     console.log(coffeeStore);/* shown in terminal */
-
     if (router.isFallback) {
       return <div>Loading...</div>
     }
+    const {name,address,neighbourhood}= coffeeStore
   return (
     <div>
       <Head>
-          <title>{router.query.id}</title>
+          <title>{name}</title>
       </Head>
       <Link href={'/'}> Back to home</Link>
       <br/>
-      coffee with id of {router.query.id}
+        coffee with id of {router.query.id}
       <br/>
-      <div>{coffeeStore.name}</div>
-      
+      <div>{name}</div>
+      <div>{address}</div>
+      <div>{neighbourhood}</div>
     </div>
   )
 }
