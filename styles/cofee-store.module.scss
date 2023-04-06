@@ -1,5 +1,5 @@
 .main {
-    margin-top: 25%;
+    margin-top: 20%;
     .link {
         width: 8rem;
         display: flex;
@@ -12,9 +12,11 @@
     }
     .content {
         margin-top: 3rem;
+        margin-bottom: 3rem;
         display: grid;
         grid-template-columns: repeat(2,1fr);
         gap: 2rem;
+
         .part1 {
             h1 {
                 font-size: 40px;
@@ -62,5 +64,40 @@
                 }
             }
         }
+    }
+}
+/* Medium */
+@media (max-width: 992px) {
+    .main{
+        .content {
+            .part2 {
+                justify-content: space-around;
+            }
+        }
+    }
+}
+/* Small */
+@media (max-width: 768px) {
+    .main {
+        margin-top: 5%;
+        .content {
+            grid-template-columns: auto;
+            .part2 {
+                min-height: 170px;
+                margin-top: 1rem;
+                justify-content: space-around;
+                .adr,
+                .rating {
+                    & .icon {
+                        color: coral;
+                    }
+                }
+            }
+        }
+    }
+}
+@media (max-width: 667px) {
+    .image {
+        width: 100%;
     }
 }
