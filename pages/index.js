@@ -3,17 +3,19 @@ import styles from '@/styles/Home.module.scss'
 import Banner from '@/components/banner/banner'
 import CardStoreItem from '@/components/card-Store-Item/cardStoreItem'
 import cls from "classnames"
-import coffeStoresData from '/data/coffee-stores.json'
+import { fetchCoffeStores } from '@/lib/coffeeStores'
 
 export async function getStaticProps(context) {
-  /* const data = fetch(coffeStores)  if we have a server*/
+
+  const coffeStores = await fetchCoffeStores ();
+
   return {
     props: {
-      coffeStores:coffeStoresData,
+      coffeStores,
     }, // will be passed to the page component as props
   }
 }
-export default function Home(props) {
+export default function Home({coffeStores}) {
   const viewSotresNearBy = () => {
     console.log('banner clicked');
   }
@@ -30,17 +32,17 @@ export default function Home(props) {
           {/* Banner section */}
           <Banner buttonText= 'View Stores nearby' handleOnClick= {viewSotresNearBy}/>
           {/* Stores section */}
-          {props.coffeStores.length > 0 && (
+          {coffeStores.length > 0 && (
             <div>
               <h2 className={styles.town}>Algies stores</h2>
               <div className={styles.cardStoreItems}>
-                {props.coffeStores.map((coffeStore) => { 
+                {coffeStores.map((coffeStore) => { 
                   return (
                   <CardStoreItem
-                    key={coffeStore.id}
-                    name = {coffeStore.name} 
-                    imgUrl = {coffeStore.imgUrl} 
-                    href = {`./coffee-stores/${coffeStore.id}`} 
+                    key={coffeStore.number}
+                    name = {coffeStore.placeLabel} 
+                    imgUrl = {"https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"} 
+                    href = {`./coffee-stores/${coffeStore.number}`} 
                   />
                   );
                 })}

@@ -1,5 +1,11 @@
 .cardStoreItem {
     padding: 1rem;
+    h2{
+        margin-bottom:1rem;
+        color: darkslategrey;
+        text-shadow: 0 0 10px coral;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
-   
-    
