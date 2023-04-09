@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 import coffeeStoresData from '../../data/coffee-stores.json'
+import { fetchedCoffeStores } from '@/lib/coffeeStores'
 import styles from '../../styles/cofee-store.module.scss'
 import cls from 'classnames'
 import Image from 'next/image'
@@ -11,10 +12,11 @@ import {AiFillStar} from 'react-icons/ai'
 
 // Generates `/coffee-stores/1` and `/coffee-stores/2`
 export async function getStaticPaths() {
-  const paths = coffeeStoresData.map((coffeeStore)=>{
+  const coffeStores = await fetchedCoffeStores ();
+  const paths =  coffeStores.map((coffeeStore)=>{
       return {
         params: {
-          id:coffeeStore.id.toString(),
+          id:coffeeStore.number.toString(),
         }
       }
   });
@@ -26,24 +28,12 @@ export async function getStaticPaths() {
 
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps(context) {
+
   const {params} = context 
-  console.log("Path params :",params );/* shown in terminal */
-  const options = {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      Authorization: "prj_live_sk_16d90f3831cdb5e0ac97ac19f99b1f80c3d9ddec",
-    },
-  };
-  const response = await fetch(
-    'https://api.radar.io/v1/search/autocomplete?query=coffee&near=40.70390%2C-73.98670',
-    options
-  )
-  const data = await response.json()
-  console.log(data.addresses.map((address)=> address.placeLabel));
+  const coffeStores = await fetchedCoffeStores ();
   return {
     // Passed to the page component as props
-    props: { coffeeStore: data.addresses.find((coffeeStore)=>{
+    props: { coffeeStore: coffeStores.find((coffeeStore)=>{
       return coffeeStore.number.toString() === params.id 
     }) },
   }

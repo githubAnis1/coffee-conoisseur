@@ -3,12 +3,12 @@ import styles from '@/styles/Home.module.scss'
 import Banner from '@/components/banner/banner'
 import CardStoreItem from '@/components/card-Store-Item/cardStoreItem'
 import cls from "classnames"
-import { fetchCoffeStores } from '@/lib/coffeeStores'
+import { fetchedCoffeStores } from '@/lib/coffeeStores'
 
 export async function getStaticProps(context) {
 
-  const coffeStores = await fetchCoffeStores ();
-
+  const coffeStores = await fetchedCoffeStores ();
+  console.log(coffeStores);
   return {
     props: {
       coffeStores,
