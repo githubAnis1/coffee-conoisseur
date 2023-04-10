@@ -38,10 +38,10 @@ export default function Home({coffeStores}) {
                 {coffeStores.map((coffeStore) => { 
                   return (
                   <CardStoreItem
-                    key={coffeStore.number}
-                    name = {coffeStore.placeLabel} 
+                    key={coffeStore.id}
+                    name = {coffeStore.name} 
                     imgUrl = {coffeStore.imgUrl} 
-                    href = {`./coffee-stores/${coffeStore.number}`} 
+                    href = {`./coffee-stores/${coffeStore.id}`} 
                   />
                   );
                 })}

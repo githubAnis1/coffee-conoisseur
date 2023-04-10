@@ -16,7 +16,7 @@ export async function getStaticPaths() {
   const paths =  coffeStores.map((coffeeStore)=>{
       return {
         params: {
-          id:coffeeStore.number.toString(),
+          id:coffeeStore.id.toString(),
         }
       }
   });
@@ -34,7 +34,7 @@ export async function getStaticProps(context) {
   return {
     // Passed to the page component as props
     props: { coffeeStore: coffeStores.find((coffeeStore)=>{
-      return coffeeStore.number.toString() === params.id 
+      return coffeeStore.id.toString() === params.id 
     }) },
   }
 }
@@ -49,11 +49,11 @@ const coffee_store = ({coffeeStore}) => {
     if (router.isFallback) {
       return <div>Loading...</div>
     }
-    const {placeLabel,formattedAddress,imgUrl} = coffeeStore
+    const {name,addresse,imgUrl} = coffeeStore
   return (
     <div>
       <Head>
-          <title>{placeLabel}</title>
+          <title>{name}</title>
       </Head>
       <div className={ cls("container",styles.main)}>
         <Link href={'/'} className={styles.link}>
@@ -62,11 +62,11 @@ const coffee_store = ({coffeeStore}) => {
         </Link>
         <div className={styles.content}>
           <div className={styles.part1}>
-            <h1>{placeLabel}</h1>
-            <Image  src={imgUrl} className={styles.image} alt={placeLabel}  width={500} height={250} ></Image>
+            <h1>{name}</h1>
+            <Image  src={imgUrl} className={styles.image} alt={name}  width={500} height={250} ></Image>
           </div>
           <div className={styles.part2}>
-            <div className={styles.adr}><TiLocationOutline className={styles.icon}/>{formattedAddress}.</div>
+            <div className={styles.adr}><TiLocationOutline className={styles.icon}/>{addresse}.</div>
             <div className={styles.rating}><AiFillStar className={styles.icon}/>10</div>
             <button onClick={UpVoteHundler}>Up Vote!</button>
           </div>
