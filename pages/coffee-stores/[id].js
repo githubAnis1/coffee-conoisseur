@@ -49,7 +49,7 @@ const coffee_store = ({coffeeStore}) => {
     if (router.isFallback) {
       return <div>Loading...</div>
     }
-    const {placeLabel,formattedAddress} = coffeeStore
+    const {placeLabel,formattedAddress,imgUrl} = coffeeStore
   return (
     <div>
       <Head>
@@ -63,7 +63,7 @@ const coffee_store = ({coffeeStore}) => {
         <div className={styles.content}>
           <div className={styles.part1}>
             <h1>{placeLabel}</h1>
-            <Image  src={"https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"} className={styles.image} alt={placeLabel}  width={500} height={250} ></Image>
+            <Image  src={imgUrl} className={styles.image} alt={placeLabel}  width={500} height={250} ></Image>
           </div>
           <div className={styles.part2}>
             <div className={styles.adr}><TiLocationOutline className={styles.icon}/>{formattedAddress}.</div>
