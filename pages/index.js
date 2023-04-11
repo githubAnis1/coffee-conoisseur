@@ -5,9 +5,11 @@ import CardStoreItem from '@/components/card-Store-Item/cardStoreItem'
 import cls from "classnames"
 import { fetchedCoffeStores } from '@/lib/coffeeStores'
 import useTrackLocation from '@/hooks/use-track-location'
+import { useEffect } from 'react'
 
+//serverSide Actions: data fetched before rendering
 export async function getStaticProps(context) {
-
+  // get the coffeStores in serverside
   const coffeStores = await fetchedCoffeStores ();
   return {
     props: {
@@ -15,14 +17,32 @@ export async function getStaticProps(context) {
     }, // will be passed to the page component as props
   }
 }
+//clientSide Actions
 
 export default function Home({coffeStores}) {
 
-  const {handleTrackLocation, latLong, locationErrorMsg,isFindLocation} = useTrackLocation();
+  const { handleTrackLocation, latLong, locationErrorMsg,isFindLocation } = useTrackLocation();
+  //request latLong on click then useEffect called
   const viewSotresNearBy = () => {
-    console.log({latLong,locationErrorMsg});
     handleTrackLocation();
+    console.log({latLong,locationErrorMsg});
   }
+// get the coffeStores in ClientSide by location 'latLong'
+  useEffect(()=>{
+    async function setCoffeeStoresByLocation() {
+      try {
+        if (latLong) {
+          const fetchedCoffeStoresByLoc = await fetchedCoffeStores (latLong);
+          console.log(fetchedCoffeStoresByLoc);
+          //set coffeeStores
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    setCoffeeStoresByLocation()
+  },[latLong]) // latLong changed when clicking viewSotresNearBy in Banner
+
   return (
     <div>
       <div className={cls("container")}>
@@ -38,7 +58,7 @@ export default function Home({coffeStores}) {
           {/* Stores section */}
           {coffeStores.length > 0 && (
             <div>
-              <h2 className={styles.town}>Algies stores</h2>
+              <h2 className={styles.town}>Algies coffee stores</h2>
               <div className={styles.cardStoreItems}>
                 {coffeStores.map((coffeStore) => { 
                   return (
