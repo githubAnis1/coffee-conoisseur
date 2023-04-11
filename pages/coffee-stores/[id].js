@@ -38,9 +38,11 @@ export async function getStaticProps(context) {
     }) },
   }
 }
+
 const UpVoteHundler = ()=>{
   console.log('UpVote !');
 }
+
 const coffee_store = ({coffeeStore}) => {
     // Render coffeeStore...
     const router = useRouter()

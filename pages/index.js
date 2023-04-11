@@ -4,6 +4,7 @@ import Banner from '@/components/banner/banner'
 import CardStoreItem from '@/components/card-Store-Item/cardStoreItem'
 import cls from "classnames"
 import { fetchedCoffeStores } from '@/lib/coffeeStores'
+import useTrackLocation from '@/hooks/use-track-location'
 
 export async function getStaticProps(context) {
 
@@ -14,9 +15,13 @@ export async function getStaticProps(context) {
     }, // will be passed to the page component as props
   }
 }
+
 export default function Home({coffeStores}) {
+
+  const {handleTrackLocation, latLong, locationErrorMsg,isFindLocation} = useTrackLocation();
   const viewSotresNearBy = () => {
-    console.log('banner clicked');
+    console.log({latLong,locationErrorMsg});
+    handleTrackLocation();
   }
   return (
     <div>
@@ -29,7 +34,7 @@ export default function Home({coffeStores}) {
         </Head>
         <main className={styles.main}>
           {/* Banner section */}
-          <Banner buttonText= 'View Stores nearby' handleOnClick= {viewSotresNearBy}/>
+          <Banner buttonText= {isFindLocation ? "Locating...":'View Stores nearby'} handleOnClick= {viewSotresNearBy}/>
           {/* Stores section */}
           {coffeStores.length > 0 && (
             <div>
