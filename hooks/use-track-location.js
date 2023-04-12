@@ -17,6 +17,7 @@ const useTrackLocation = () => {
     const error = () => {
         SetIsFindLocation(false)
         setLocationErrorMsg("Unable to retrieve your location");
+        setLatLong("")
     };
 
     const handleTrackLocation = () => {

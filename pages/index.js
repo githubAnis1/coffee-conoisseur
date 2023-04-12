@@ -5,9 +5,9 @@ import CardStoreItem from '@/components/card-Store-Item/cardStoreItem'
 import cls from "classnames"
 import { fetchedCoffeStores } from '@/lib/coffeeStores'
 import useTrackLocation from '@/hooks/use-track-location'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-//serverSide Actions: data fetched before rendering
+//ServerSide Actions: data fetched before rendering
 export async function getStaticProps(context) {
   // get the coffeStores in serverside
   const coffeStores = await fetchedCoffeStores ();
@@ -17,24 +17,26 @@ export async function getStaticProps(context) {
     }, // will be passed to the page component as props
   }
 }
-//clientSide Actions
 
 export default function Home({coffeStores}) {
-
+  //ClientSide Actions
+  const[coffeeStores,setCoffeStores] = useState('')
   const { handleTrackLocation, latLong, locationErrorMsg,isFindLocation } = useTrackLocation();
   //request latLong on click then useEffect called
   const viewSotresNearBy = () => {
     handleTrackLocation();
     console.log({latLong,locationErrorMsg});
+    {latLong ? "" : locationErrorMsg}
   }
 // get the coffeStores in ClientSide by location 'latLong'
-  useEffect(()=>{
+  useEffect(() => {
     async function setCoffeeStoresByLocation() {
       try {
         if (latLong) {
           const fetchedCoffeStoresByLoc = await fetchedCoffeStores (latLong);
           console.log(fetchedCoffeStoresByLoc);
           //set coffeeStores
+          setCoffeStores(fetchedCoffeStoresByLoc)
         }
       } catch (error) {
         console.log(error)
@@ -55,10 +57,29 @@ export default function Home({coffeStores}) {
         <main className={styles.main}>
           {/* Banner section */}
           <Banner buttonText= {isFindLocation ? "Locating...":'View Stores nearby'} handleOnClick= {viewSotresNearBy}/>
+          <div style={{color:"red"}}>{locationErrorMsg}</div>
           {/* Stores section */}
+          {/*  Render for client Side when click viewSotresNearBy*/}
+          {latLong &&(
+            <div>
+              <h2 className={styles.town}>stores near me</h2>
+              <div className={styles.cardStoreItems}>
+                {coffeeStores.map((coffeeStore) => { 
+                  return (
+                  <CardStoreItem
+                    key={coffeeStore.id}
+                    name = {coffeeStore.name} 
+                    imgUrl = {coffeeStore.imgUrl} 
+                    href = {`./coffee-stores/${coffeeStore.id}`} 
+                  />
+                  );
+                })}
+              </div>
+            </div>)} 
+          {/* 1st Render from server Side  */}
           {coffeStores.length > 0 && (
             <div>
-              <h2 className={styles.town}>Algies coffee stores</h2>
+              <h2 className={styles.town}>New York coffee stores</h2>
               <div className={styles.cardStoreItems}>
                 {coffeStores.map((coffeStore) => { 
                   return (
