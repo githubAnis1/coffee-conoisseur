@@ -20,7 +20,7 @@ export async function getStaticProps(context) {
 
 export default function Home({coffeStores}) {
   //ClientSide Actions
-  const[coffeeStores,setCoffeStores] = useState('')
+  const[coffeeStoresClient,setCoffeStores] = useState([])
   const { handleTrackLocation, latLong, locationErrorMsg,isFindLocation } = useTrackLocation();
   //request latLong on click then useEffect called
   const viewSotresNearBy = () => {
@@ -36,6 +36,7 @@ export default function Home({coffeStores}) {
           const fetchedCoffeStoresByLoc = await fetchedCoffeStores (latLong);
           console.log(fetchedCoffeStoresByLoc);
           //set coffeeStores
+          console.log(fetchedCoffeStoresByLoc);
           setCoffeStores(fetchedCoffeStoresByLoc)
         }
       } catch (error) {
@@ -64,7 +65,7 @@ export default function Home({coffeStores}) {
             <div>
               <h2 className={styles.town}>stores near me</h2>
               <div className={styles.cardStoreItems}>
-                {coffeeStores.map((coffeeStore) => { 
+                {coffeeStoresClient.map((coffeeStore) => { 
                   return (
                   <CardStoreItem
                     key={coffeeStore.id}

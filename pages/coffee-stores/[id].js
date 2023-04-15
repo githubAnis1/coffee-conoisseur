@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-import coffeeStoresData from '../../data/coffee-stores.json'
 import { fetchedCoffeStores } from '@/lib/coffeeStores'
 import styles from '../../styles/cofee-store.module.scss'
 import cls from 'classnames'
