@@ -7,7 +7,7 @@ const IBMPlex_Sans = IBM_Plex_Sans({
   weight:['400','700']
 })
 //create context for Latlong and coffees Stores
-const StoreContext = createContext({});
+export const StoreContext = createContext({});
 //useReducer
 export const ACTION_TYPES = {
   SET_LAT_LONG: "SET_LAT_LONG",

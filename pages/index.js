@@ -4,6 +4,7 @@ import Banner from '@/components/banner/banner'
 import CardStoreItem from '@/components/card-Store-Item/cardStoreItem'
 import cls from "classnames"
 import { fetchedCoffeStores } from '@/lib/coffeeStores'
+import {getCoffeStoresByLocation} from '../pages/api/getCoffeStoresByLocation'
 import useTrackLocation from '@/hooks/use-track-location'
 import { useEffect, useState } from 'react'
 
@@ -33,11 +34,12 @@ export default function Home({coffeStores}) {
     async function setCoffeeStoresByLocation() {
       try {
         if (latLong) {
-          const fetchedCoffeStoresByLoc = await fetchedCoffeStores (latLong);
-          console.log(fetchedCoffeStoresByLoc);
+          //const fetchedCoffeStoresByLoc = await fetchedCoffeStores (latLong);//from lib
+          const getCoffeStoresByLocation = await fetch(`/api/getCoffeStoresByLocation?latlong`);//from api
+          const coffeeStores = await getCoffeStoresByLocation.json()
+          console.log(coffeeStores);
           //set coffeeStores
-          console.log(fetchedCoffeStoresByLoc);
-          setCoffeStores(fetchedCoffeStoresByLoc)
+          setCoffeStores(coffeeStores)
         }
       } catch (error) {
         console.log(error)

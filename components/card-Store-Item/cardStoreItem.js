@@ -9,7 +9,12 @@ const CardStoreItem = ({name,imgUrl,href}) => {
         <div className={cls("glass",styles.cardStoreItem)}>
             <Link href={href}>
                 <h2>{name}</h2>
-                <Image src={imgUrl} alt=""  width={260} height={160}  style={{ width: '100%'}}></Image>
+                <Image
+                    className={styles.image} 
+                    src={imgUrl} alt={name}  
+                    width={260} 
+                    height={160}  style={{ width: '100%'}}
+                    ></Image>
             </Link>
         </div>
     )
